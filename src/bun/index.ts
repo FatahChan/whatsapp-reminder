@@ -23,7 +23,7 @@ async function getMainViewUrl(): Promise<string> {
 // Create the main application window
 const url = await getMainViewUrl();
 
-const mainWindow = new BrowserWindow({
+new BrowserWindow({
 	title: "React + Tailwind + Vite",
 	url,
 	frame: {

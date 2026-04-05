@@ -1,12 +1,16 @@
 import { StrictMode } from 'react'
 import ReactDOM from 'react-dom/client'
+import { createHashHistory } from '@tanstack/history'
 import { RouterProvider, createRouter } from '@tanstack/react-router'
 
 // Import the generated route tree
 import { routeTree } from './routeTree.gen'
 
-// Create a new router instance
-const router = createRouter({ routeTree })
+// Hash routing avoids document pathname issues in desktop shells (e.g. …/index.html vs "/").
+// See TanStack history guide and community notes: https://github.com/TanStack/router/discussions/835
+const history = createHashHistory()
+
+const router = createRouter({ routeTree, history })
 
 // Register the router instance for type safety
 declare module '@tanstack/react-router' {

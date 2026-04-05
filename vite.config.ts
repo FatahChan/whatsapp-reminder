@@ -4,6 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 
 export default defineConfig({
+	// Relative URLs so views:// (Electrobun) can load /assets chunks; absolute "/" breaks lazy devtools chunk.
+	base: "./",
 	plugins: [
 		tanstackRouter({
 			target: "react",
