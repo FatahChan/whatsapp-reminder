@@ -35,3 +35,4 @@ Thumbs.db
 # App release bundles (Electrobun / desktop builds)
 release/
 out/
+artifacts/

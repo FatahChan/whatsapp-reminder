@@ -1,6 +1,5 @@
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
-// Default export is a no-op when Vite builds with NODE_ENV=production (e.g. Electrobun loads dist/).
-import { TanStackRouterDevtoolsInProd as TanStackRouterDevtools } from '@tanstack/react-router-devtools'
+import { TanStackRouterDevtools } from '@tanstack/react-router-devtools'
 
 const RootLayout = () => (
   <>
