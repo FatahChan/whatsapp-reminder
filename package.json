@@ -1,0 +1,29 @@
+{
+	"name": "electrobun-react-tailwind-vite",
+	"version": "1.0.0",
+	"description": "Electrobun app with React, Tailwind CSS, and Vite HMR",
+	"scripts": {
+		"start": "vite build && electrobun dev",
+		"dev": "electrobun dev --watch",
+		"dev:hmr": "concurrently \"bun run hmr\" \"bun run start\"",
+		"hmr": "vite --port 5173",
+		"build:canary": "vite build && electrobun build --env=canary"
+	},
+	"dependencies": {
+		"electrobun": "1.16.0",
+		"react": "^19.2.4",
+		"react-dom": "^19.2.4"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.3.11",
+		"@types/react": "^19.2.14",
+		"@types/react-dom": "^19.2.3",
+		"@vitejs/plugin-react": "^6.0.1",
+		"autoprefixer": "^10.4.27",
+		"concurrently": "^9.2.1",
+		"postcss": "^8.5.8",
+		"tailwindcss": "^4.2.2",
+		"typescript": "^6.0.2",
+		"vite": "^8.0.3"
+	}
+}

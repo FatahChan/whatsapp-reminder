@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build output (Vite → dist/, see vite.config.ts)
+dist/
+build/
+
+# Vite
+.vite/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Logs and debug
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+bun-debug.log*
+
+# TypeScript
+*.tsbuildinfo
+
+# Tests / coverage
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# App release bundles (Electrobun / desktop builds)
+release/
+out/
