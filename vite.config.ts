@@ -23,6 +23,12 @@ export default defineConfig({
 	server: {
 		port: 5173,
 		strictPort: true,
+		// Bind IPv4 so Bun + WebKit in Electrobun resolve the same host as wait / fetch probes.
+		host: "127.0.0.1",
+		hmr: {
+			host: "127.0.0.1",
+			protocol: "ws",
+		},
 	},
 	resolve: {
 		tsconfigPaths: true,
