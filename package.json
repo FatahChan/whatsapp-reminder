@@ -4,7 +4,7 @@
 	"description": "WhatsApp Reminder — desktop scheduled messages (Electrobun + React + whatsapp-web.js)",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/YOUR_USERNAME/whatsapp-reminder.git"
+		"url": "https://github.com/FatahChan/whatsapp-reminder.git"
 	},
 	"scripts": {
 		"dev": "concurrently \"bun run hmr\" \"bun run scripts/electrobun-after-vite.ts\"",

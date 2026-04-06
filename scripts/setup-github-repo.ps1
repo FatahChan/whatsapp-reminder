@@ -51,6 +51,4 @@ Write-Host "Creating repo $repo on GitHub and pushing main..."
 
 $user = & $exe api user --jq .login
 Write-Host "Done. Remote: https://github.com/$user/$repo"
-if ((Get-Content (Join-Path $root package.json) -Raw) -match "YOUR_USERNAME") {
-	Write-Host "Tip: set package.json repository.url to https://github.com/$user/$repo.git" -ForegroundColor Cyan
-}
+Write-Host "Repository: https://github.com/$user/$repo" -ForegroundColor Cyan

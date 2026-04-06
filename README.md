@@ -36,7 +36,7 @@ git branch -M main
 git push -u origin main
 ```
 
-Update `package.json` → `repository.url` to match your real GitHub URL (replace `YOUR_USERNAME`).
+Repository: [github.com/FatahChan/whatsapp-reminder](https://github.com/FatahChan/whatsapp-reminder).
 
 Tags for releases (used by CI):
 
