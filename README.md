@@ -15,29 +15,6 @@ Desktop app for **scheduled WhatsApp messages** (daily at a set local time). Bui
 - **Google Chrome** (or Chromium) on the machine — used by WhatsApp Web via Puppeteer. Optional env: `WHATSAPP_CHROME_PATH` / `chrome.exe` path if not auto-detected.
 - **Windows 11+** or **Ubuntu 22.04+** (GTK/WebKit stack for Electrobun on Linux).
 
-## Repository setup (GitHub)
-
-**Option A — GitHub CLI (recommended)**  
-Install [GitHub CLI](https://cli.github.com/) (`winget install GitHub.cli`), then in PowerShell from the repo root:
-
-```powershell
-gh auth login
-.\scripts\setup-github-repo.ps1
-```
-
-That creates `whatsapp-reminder` under your account, sets `origin`, and pushes `main`.
-
-**Option B — manual**
-
-```bash
-git remote remove origin   # if needed
-git remote add origin https://github.com/<your-username>/whatsapp-reminder.git
-git branch -M main
-git push -u origin main
-```
-
-Repository: [github.com/FatahChan/whatsapp-reminder](https://github.com/FatahChan/whatsapp-reminder).
-
 Tags for releases (used by CI):
 
 ```bash
