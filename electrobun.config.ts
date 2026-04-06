@@ -2,9 +2,12 @@ import type { ElectrobunConfig } from "electrobun";
 
 export default {
 	app: {
-		name: "react-tailwind-vite",
-		identifier: "reacttailwindvite.electrobun.dev",
-		version: "0.0.1",
+		name: "WhatsApp Reminders",
+		identifier: "dev.electrobun.whatsapp-reminders",
+		version: "0.1.0",
+	},
+	runtime: {
+		exitOnLastWindowClosed: false,
 	},
 	build: {
 		// Vite builds to dist/, we copy from there
