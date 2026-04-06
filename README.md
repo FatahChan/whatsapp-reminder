@@ -17,16 +17,26 @@ Desktop app for **scheduled WhatsApp messages** (daily at a set local time). Bui
 
 ## Repository setup (GitHub)
 
-Create a new repository on GitHub, for example **`whatsapp-reminder`**, then point your local clone at it:
+**Option A — GitHub CLI (recommended)**  
+Install [GitHub CLI](https://cli.github.com/) (`winget install GitHub.cli`), then in PowerShell from the repo root:
+
+```powershell
+gh auth login
+.\scripts\setup-github-repo.ps1
+```
+
+That creates `whatsapp-reminder` under your account, sets `origin`, and pushes `main`.
+
+**Option B — manual**
 
 ```bash
-# If you still have the old remote:
-git remote remove origin
-
+git remote remove origin   # if needed
 git remote add origin https://github.com/<your-username>/whatsapp-reminder.git
 git branch -M main
 git push -u origin main
 ```
+
+Update `package.json` → `repository.url` to match your real GitHub URL (replace `YOUR_USERNAME`).
 
 Tags for releases (used by CI):
 
