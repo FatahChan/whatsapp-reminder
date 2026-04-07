@@ -18,13 +18,16 @@ export default {
 		// Ignore Vite output in watch mode — HMR handles view rebuilds separately
 		watchIgnore: ["dist/**"],
 		mac: {
-			bundleCEF: true,
+			bundleCEF: false,
 		},
 		linux: {
-			bundleCEF: true,
+			bundleCEF: false,
 		},
 		win: {
-			bundleCEF: true,
+			bundleCEF: false,
 		},
 	},
+	release: {
+		baseUrl: "https://github.com/FatahChan/whatsapp-reminder/releases/latest/download"
+	}
 } satisfies ElectrobunConfig;
