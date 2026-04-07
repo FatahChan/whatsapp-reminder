@@ -1,7 +1,7 @@
 import QRCode from "qrcode";
 import pkg from "whatsapp-web.js";
-import type { WaState } from "@shared/types";
-import { WWEBJS_AUTH_DIR } from "@bun/paths";
+import type { WaState } from "../shared/types";
+import { WWEBJS_AUTH_DIR } from "./paths";
 
 const { Client, LocalAuth } = pkg;
 
