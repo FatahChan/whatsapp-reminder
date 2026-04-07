@@ -1,6 +1,6 @@
 {
 	"name": "whatsapp-reminder",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "WhatsApp Reminder — desktop scheduled messages (Electrobun + React + whatsapp-web.js)",
 	"repository": {
 		"type": "git",

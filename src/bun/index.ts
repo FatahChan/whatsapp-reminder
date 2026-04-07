@@ -71,10 +71,108 @@ async function getMainViewUrl(): Promise<string> {
 	return "views://mainview/index.html";
 }
 
+async function runAutoUpdate(): Promise<void> {
+	const channel = await Updater.localInfo.channel();
+	if (channel === "dev") return;
+	await checkForUpdates(false);
+}
+
 /** Active UI RPC for Bun → webview messages (cleared when window closes). */
 let uiRpc: ReturnType<typeof BrowserView.defineRPC<AppRPCSchema>> | null =
 	null;
 let mainWindow: BrowserWindow | null = null;
+let tray: Tray | null = null;
+let appVersionLabel = "Version: unknown";
+let updateStatusLabel = "Updates: idle";
+let updateReady = false;
+
+async function detectLocalVersion(): Promise<string | null> {
+	try {
+		const maybeLocalInfo = Updater.localInfo as unknown as {
+			version?: () => Promise<string>;
+		};
+		if (typeof maybeLocalInfo.version === "function") {
+			return await maybeLocalInfo.version();
+		}
+	} catch {}
+	try {
+		const maybeUpdater = Updater as unknown as {
+			getLocalInfo?: () => Promise<{ version?: string }>;
+			getLocal?: Promise<{ version?: string }>;
+		};
+		if (typeof maybeUpdater.getLocalInfo === "function") {
+			const info = await maybeUpdater.getLocalInfo();
+			if (info?.version) return info.version;
+		}
+		if (maybeUpdater.getLocal) {
+			const info = await maybeUpdater.getLocal;
+			if (info?.version) return info.version;
+		}
+	} catch {}
+	return null;
+}
+
+function refreshTrayMenu(): void {
+	if (!tray) return;
+	tray.setMenu([
+		{ type: "normal", label: "Show window", action: "show" },
+		{ type: "separator" },
+		{ type: "normal", label: appVersionLabel, action: "noop" },
+		{ type: "normal", label: updateStatusLabel, action: "noop" },
+		{ type: "normal", label: "Check for updates", action: "check-updates" },
+		...(updateReady
+			? [
+					{
+						type: "normal" as const,
+						label: "Restart to update",
+						action: "apply-update",
+					},
+				]
+			: []),
+		{ type: "separator" },
+		{ type: "normal", label: "Quit", action: "quit" },
+	]);
+}
+
+async function checkForUpdates(manual = false): Promise<void> {
+	try {
+		updateStatusLabel = "Updates: checking...";
+		refreshTrayMenu();
+		const info = await Updater.checkForUpdate();
+		if (info.error) {
+			updateStatusLabel = `Updates: error (${info.error})`;
+			refreshTrayMenu();
+			return;
+		}
+		if (!info.updateAvailable) {
+			updateStatusLabel = "Updates: up to date";
+			updateReady = false;
+			refreshTrayMenu();
+			return;
+		}
+
+		updateStatusLabel = `Updates: downloading ${info.version}...`;
+		refreshTrayMenu();
+		await Updater.downloadUpdate();
+
+		const latest = Updater.updateInfo();
+		if (latest?.updateReady) {
+			updateReady = true;
+			updateStatusLabel = `Updates: ready (${latest.version})`;
+			refreshTrayMenu();
+			if (!manual) {
+				console.log("Update ready. Use tray: Restart to update.");
+			}
+			return;
+		}
+
+		updateStatusLabel = "Updates: download finished, not ready";
+		refreshTrayMenu();
+	} catch (e) {
+		updateStatusLabel = `Updates: failed (${e instanceof Error ? e.message : String(e)})`;
+		refreshTrayMenu();
+	}
+}
 
 function pushWaStatus() {
 	uiRpc?.send.waStatus(getWaState());
@@ -203,21 +301,29 @@ startWhatsAppClient().catch((e) => {
 const url = await getMainViewUrl();
 openMainWindow(url);
 
-const tray = new Tray({
+tray = new Tray({
 	title: "WhatsApp Reminders",
 });
 
-tray.setMenu([
-	{ type: "normal", label: "Show window", action: "show" },
-	{ type: "separator" },
-	{ type: "normal", label: "Quit", action: "quit" },
-]);
+const localVersion = await detectLocalVersion();
+if (localVersion) {
+	appVersionLabel = `Version: ${localVersion}`;
+}
+refreshTrayMenu();
+
+void runAutoUpdate();
 
 tray.on("tray-clicked", (e: unknown) => {
 	const ev = e as { data?: { action?: string } };
 	const action = ev.data?.action;
 	if (action === "show") {
 		void getMainViewUrl().then((u) => openMainWindow(u));
+	}
+	if (action === "check-updates") {
+		void checkForUpdates(true);
+	}
+	if (action === "apply-update") {
+		void Updater.applyUpdate();
 	}
 	if (action === "quit") {
 		Utils.quit();
