@@ -26,9 +26,9 @@ jobs:
             artifact: windows-x64
           - os: ubuntu-22.04
             artifact: linux-x64
-          - os: macos-13
+          - os: macos-15-intel
             artifact: macos-x86
-          - os: macos-14
+          - os: macos-15
             artifact: macos-arm64
 
     runs-on: ${{ matrix.os }}
