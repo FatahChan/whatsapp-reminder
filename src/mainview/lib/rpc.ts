@@ -1,6 +1,6 @@
 import { Electroview } from "electrobun/view";
-import type { AppRPCSchema } from "../../shared/app-rpc-schema";
-import type { Reminder, WaState } from "../../shared/types";
+import type { AppRPCSchema } from "@shared/app-rpc-schema";
+import type { Reminder, WaState } from "@shared/types";
 
 type Listeners = {
 	onQr: (dataUrl: string) => void;
@@ -22,13 +22,13 @@ export const rpc = Electroview.defineRPC<AppRPCSchema>({
 	handlers: {
 		requests: {},
 		messages: {
-			qr: (payload: string) => {
+			qr: (payload) => {
 				listeners.onQr(payload);
 			},
-			waStatus: (payload: WaState) => {
+			waStatus: (payload) => {
 				listeners.onWaStatus(payload);
 			},
-			remindersUpdated: (payload: Reminder[]) => {
+			remindersUpdated: (payload) => {
 				listeners.onReminders(payload);
 			},
 		},

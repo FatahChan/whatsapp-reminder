@@ -17,7 +17,10 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
-			"@/*": ["./src/mainview/*"]
+			"@/*": ["./src/*"],
+			"@bun/*": ["./src/bun/*"],
+			"@mainview/*": ["./src/mainview/*"],
+			"@shared/*": ["./src/shared/*"]
 		}
 	},
 	"include": ["src"],

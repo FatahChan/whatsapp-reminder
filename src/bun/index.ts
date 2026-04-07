@@ -6,8 +6,8 @@ import {
 	Utils,
 	Updater,
 } from "electrobun/bun";
-import type { AppRPCSchema } from "../shared/app-rpc-schema";
-import type { Reminder, ReminderInput } from "../shared/types";
+import type { AppRPCSchema } from "@shared/app-rpc-schema";
+import type { Reminder } from "@shared/types";
 import {
 	initRemindersStore,
 	listReminders,
@@ -201,22 +201,22 @@ function createMainRpc() {
 		maxRequestTime: 120_000,
 		handlers: {
 			requests: {
-				listReminders: (_params: unknown) => listReminders(),
-				getWhatsAppState: (_params: unknown) => getWaState(),
-				upsertReminder: async (params: unknown) => {
-					const r = await upsertReminder(params as ReminderInput);
+				listReminders: () => listReminders(),
+				getWhatsAppState: () => getWaState(),
+				upsertReminder: async (params) => {
+					const r = await upsertReminder(params);
 					rescheduleJobs();
 					pushReminders(listReminders());
 					return r;
 				},
-				deleteReminder: async (params: unknown) => {
-					const { id } = params as { id: number };
+				deleteReminder: async (params) => {
+					const { id } = params;
 					await deleteReminder(id);
 					rescheduleJobs();
 					pushReminders(listReminders());
 					return null;
 				},
-				toggleReminder: async (params: unknown) => {
+				toggleReminder: async (params) => {
 					const { id, enabled } = params as {
 						id: number;
 						enabled: boolean;
@@ -226,8 +226,8 @@ function createMainRpc() {
 					pushReminders(listReminders());
 					return null;
 				},
-				sendTestNow: async (params: unknown) => {
-					const { id } = params as { id: number };
+				sendTestNow: async (params) => {
+					const { id } = params;
 					const all = listReminders();
 					const r = all.find((x) => x.id === id);
 					if (!r) return { ok: false, error: "Reminder not found." };

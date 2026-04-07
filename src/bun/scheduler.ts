@@ -1,5 +1,5 @@
 import nodeCron, { type ScheduledTask } from "node-cron";
-import type { Reminder } from "../shared/types";
+import type { Reminder } from "@shared/types";
 
 const tasks: ScheduledTask[] = [];
 

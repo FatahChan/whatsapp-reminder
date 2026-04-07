@@ -2,10 +2,10 @@ import { mkdir } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { Low } from "lowdb";
 import { JSONFile } from "lowdb/node";
-import type { Reminder } from "../shared/types";
-import { REMINDERS_FILE, USER_DATA_DIR } from "./paths";
-import { digitsToJid } from "../shared/phone";
-import type { ReminderInput } from "../shared/types";
+import type { Reminder } from "@shared/types";
+import { REMINDERS_FILE, USER_DATA_DIR } from "@bun/paths";
+import { digitsToJid } from "@shared/phone";
+import type { ReminderInput } from "@shared/types";
 
 type Data = { reminders: Reminder[] };
 
