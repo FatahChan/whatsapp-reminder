@@ -192,6 +192,11 @@ function rescheduleJobs() {
 			await sendWhatsAppMessage(r.target, r.message);
 		} catch (e) {
 			console.error(`Scheduled send failed for reminder ${r.id}:`, e);
+			const detail = e instanceof Error ? e.message : String(e);
+			Utils.showNotification({
+				title: "Reminder failed to send",
+				body: `#${r.id} — ${detail}`,
+			});
 		}
 	});
 }
