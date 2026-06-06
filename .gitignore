@@ -36,3 +36,5 @@ Thumbs.db
 release/
 out/
 artifacts/
+node_modules/
+.wwebjs_*/
